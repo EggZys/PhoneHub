@@ -6,8 +6,11 @@ import tempfile
 import zipfile
 from pathlib import Path
 
-ADB_PATH = r"C:\scrcpy\adb.exe"
-FASTBOOT_PATH = r"C:\Users\EggZys\AppData\Local\Android\Sdk\platform-tools\fastboot.exe"
+from core.runtime import adb_path, fastboot_path
+
+
+ADB_PATH = str(adb_path())
+FASTBOOT_PATH = str(fastboot_path())
 
 
 def _run(args: list[str], timeout: int = 60, capture: bool = True) -> subprocess.CompletedProcess:
@@ -22,6 +25,16 @@ def _run(args: list[str], timeout: int = 60, capture: bool = True) -> subprocess
         timeout=timeout,
         creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0,
     )
+
+
+def get_adb_path() -> str:
+    """Return the resolved adb path for UI and subprocess callers."""
+    return ADB_PATH
+
+
+def get_fastboot_path() -> str:
+    """Return the resolved fastboot path for UI and subprocess callers."""
+    return FASTBOOT_PATH
 
 
 def _run_async(args: list[str]) -> subprocess.Popen:

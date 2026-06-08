@@ -371,7 +371,7 @@ class DeviceGroup(QGroupBox):
         import subprocess
         try:
             subprocess.Popen(
-                ["cmd", "/k", r"C:\scrcpy\adb.exe", "shell"],
+                ["cmd", "/k", adb.get_adb_path(), "shell"],
                 creationflags=subprocess.CREATE_NEW_CONSOLE,
             )
         except Exception as e:

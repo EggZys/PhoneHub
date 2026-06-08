@@ -4,7 +4,10 @@ import subprocess
 import os
 from typing import Optional
 
-SCRCPY_PATH = r"C:\scrcpy\scrcpy.exe"
+from core.runtime import scrcpy_path
+
+
+SCRCPY_PATH = str(scrcpy_path())
 
 
 class ScrcpyManager:
@@ -52,6 +55,7 @@ class ScrcpyManager:
                 args,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
+                cwd=os.path.dirname(SCRCPY_PATH),
                 creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0,
             )
             return True, "scrcpy started"
